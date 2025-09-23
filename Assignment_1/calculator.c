@@ -13,28 +13,42 @@ int numDigits(const char *str, int *p){
 }
 
 void evaluate(const char *str){
+    int p = 1;
     int num[128], c = 0;
     char op[128], o = 0;
-    for (int i = 0; i < strlen(str) - 1; i++){
+    int start_pos = 0;
+    if (str[0] == '-'){
+        num[c++] = -numDigits(str, &p);
+        start_pos = p + 1;
+    }
+    if (!isdigit(str[strlen(str) - 2])){
+        printf("Foo ERROR: Invalid Expression.\n");
+        return;
+    }
+    for (int i = start_pos; i < strlen(str) - 1; i++){
         if (str[i] == ' '){
             continue;
         }
         if (isdigit(str[i])){
             num[c++] = numDigits(str, &i);
-            printf("d-%d: %d\n", c - 1, num[c - 1]);
+            // printf("d-%d: %d\n", c - 1, num[c - 1]); //! DEBUG: Digits parsed
         }
         else if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/'){
             if (i == 0 && str[i] == '-'){
                 continue;
             }
+            if (str[i + 1] == '+' || str[i + 1] == '-' || str[i + 1] == '*' || str[i + 1] == '/'){
+                printf("Test ERROR: Invalid Expression. %d\n", i);
+                return;
+            }
             op[o++] = str[i];
-            printf("o-%d: %c\n", o - 1, op[o - 1]);
+            // printf("o-%d: %c\n", o - 1, op[o - 1]); //! DEBUG: Operators parsed
         }
         else{
             printf("Global ERROR: Invalid Expression. %d\n", i);
             return;
         }
-        printf("%c : num[%d]: %d\n", str[i], c - 1, num[c - 1]);
+        // printf("%c : num[%d]: %d\n", str[i], c - 1, num[c - 1]); //! Test DEBUG 
     }
     for (int i = 0; i < o; i++){
         if (op[i] == '*' || op[i] == '/'){
