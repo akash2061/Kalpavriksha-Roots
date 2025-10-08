@@ -21,17 +21,17 @@ int userCount(User users[]);
 void clearInputBuffer();
 
 int main(){
-    int c;
+    int choice;
     while (1){
         menu();
         printf("Enter choice: ");
-        if (scanf("%d", &c) != 1){
+        if (scanf("%d", &choice) != 1){
             printf("Invalid input! Please enter a number.\n");
             clearInputBuffer();
             continue;
         }
         clearInputBuffer();
-        switch (c){
+        switch (choice){
         case 1:
             create();
             break;
@@ -208,6 +208,6 @@ void delete(){
 }
 
 void clearInputBuffer(){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    int input_buffer;
+    while ((input_buffer = getchar()) != '\n' && input_buffer != EOF);
 }
