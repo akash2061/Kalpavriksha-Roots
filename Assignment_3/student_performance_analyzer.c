@@ -1,39 +1,34 @@
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define MAX_SUBJECTS 3
 
-typedef struct studentData{
+typedef struct StudentData{
     int roll_no;
     char name[50];
     float marks[MAX_SUBJECTS];
-} data;
+} Data;
 
-void takeInput(data *student, int);
-float totalMarks(data student);
-float avgMarks(data student);
-void grades(data student);
-void printRoll(data *student, int);
+void takeInput(Data *student, int);
+void displayStudent(Data *student, int);
+float totalMarks(Data student);
+float avgMarks(Data student);
+void grades(Data student);
+void displayRollNo(Data *student, int);
 
 int main(){
     int student_count;
     scanf("%d", &student_count);
     getchar();
-    data student[student_count];
+    Data student[student_count];
     takeInput(student, student_count);
-    for(int i = 0; i < student_count; i++){
-        printf("\nRoll: %d\nName: %s\n", student[i].roll_no, student[i].name);
-        printf("Total: %.2f\n", totalMarks(student[i]));
-        printf("Average: %.2f\n", avgMarks(student[i]));
-        grades(student[i]);
-    }
-    printf("List of Roll Numbers (via recursion): ");
-    printRoll(student, student_count);
+    displayStudent(student, student_count);
     return 0;
 }
 
-void takeInput(data students[], int student_count){
+void takeInput(Data students[], int student_count){
     for(int i = 0; i < student_count; i++){
         char input_string[100];
         fgets(input_string, sizeof(input_string) - 1, stdin);
@@ -45,7 +40,7 @@ void takeInput(data students[], int student_count){
         }
         students[i].roll_no = atoi(token);
         token = strtok(NULL, " ");
-        if(token == NULL || strlen(token) == 0){
+        if(token == NULL || strlen(token) == 0 || isalpha(token[0]) == 0){
             printf("Invalid Name.\nRe-enter details for student %d\n", i+1);
             i--;
             continue;
@@ -64,7 +59,18 @@ void takeInput(data students[], int student_count){
     }
 }
 
-float totalMarks(data student){
+void displayStudent(Data student[], int student_count){
+    for(int i = 0; i < student_count; i++){
+        printf("\nRoll: %d\nName: %s\n", student[i].roll_no, student[i].name);
+        printf("Total: %.2f\n", totalMarks(student[i]));
+        printf("Average: %.2f\n", avgMarks(student[i]));
+        grades(student[i]);
+    }
+    printf("List of Roll Numbers (via recursion): ");
+    displayRollNo(student, student_count);
+}
+
+float totalMarks(Data student){
     float total_marks = 0;
     for (int j = 0; j < MAX_SUBJECTS; j++){
         total_marks += student.marks[j];
@@ -72,11 +78,11 @@ float totalMarks(data student){
     return total_marks;
 }
 
-float avgMarks(data student){
+float avgMarks(Data student){
     return (totalMarks(student) / (float) MAX_SUBJECTS);
 }
 
-void grades(data student){
+void grades(Data student){
     float avg_marks = avgMarks(student);
     if(avg_marks >= 85){
         printf("Grade: A\n");
@@ -96,7 +102,7 @@ void grades(data student){
     return;
 }
 
-void printRoll(data students[], int total_students){
+void displayRollNo(Data students[], int total_students){
     if (total_students == 0){
         return;
     }
@@ -110,9 +116,9 @@ void printRoll(data students[], int total_students){
 
     printf("%d ", students[min_index].roll_no);
 
-    data sort_students = students[min_index];
+    Data sort_students = students[min_index];
     students[min_index] = students[total_students-1];
     students[total_students-1] = sort_students;
 
-    printRoll(students, total_students - 1);
+    displayRollNo(students, total_students - 1);
 }
