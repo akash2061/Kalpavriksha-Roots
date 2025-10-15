@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define FILENAME "users.txt"
@@ -22,7 +21,7 @@ void clearInputBuffer();
 
 int main(){
     int choice;
-    while (1){
+    do {
         menu();
         printf("Enter choice: ");
         if (scanf("%d", &choice) != 1){
@@ -46,11 +45,11 @@ int main(){
             break;
         case 5:
             printf("Exiting...\n");
-            exit(0);
+            break;
         default:
             printf("Invalid choice! Try again.\n");
         }
-    }
+    } while(choice != 5);
     return 0;
 }
 
