@@ -4,7 +4,7 @@
 #define MIN_MATRIX_SIZE 2
 #define MAX_MATRIX_SIZE 10
 
-void swap(unsigned short int *, unsigned short int *);
+void swap(unsigned short int*, unsigned short int*);
 void generateMatrix(unsigned short int**, int);
 void displayMatrix(unsigned short int**, int);
 void clockwiseRotate(unsigned short int**, int);
@@ -57,14 +57,6 @@ void generateMatrix(unsigned short int **matrix, int matrixSize){
 
     for(int i = 0; i < matrixSize; i++){
         for(int j = 0; j < matrixSize; j++){
-            // short int intensity;
-            // scanf("%hd", &intensity);
-            // if(intensity < 0 || intensity > 255){
-            //     printf("ERROR: Intensity out of range (%d).\nRe-enter Intensity: ", intensity);
-            //     j--;
-            //     continue;
-            // }
-            // *(*(matrix + i) + j) = intensity;
             *(*(matrix + i) + j) = rand() % 256;
         }
     }
