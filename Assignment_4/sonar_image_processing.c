@@ -20,6 +20,7 @@ int main(){
         if(matrixSize < MIN_MATRIX_SIZE || matrixSize > MAX_MATRIX_SIZE){
             printf("ERROR: Invalid Matrix Size.\nRe-enter Matrix Size [%d-%d]: ", MIN_MATRIX_SIZE, MAX_MATRIX_SIZE);
         }
+        getchar();
     }while(matrixSize < MIN_MATRIX_SIZE || matrixSize > MAX_MATRIX_SIZE);
 
     unsigned short int **matrix = (unsigned short int **)malloc(matrixSize * sizeof(unsigned short int *));
