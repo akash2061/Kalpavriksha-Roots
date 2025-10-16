@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MIN_MATRIX_SIZE 2
 #define MAX_MATRIX_SIZE 10
@@ -48,6 +49,8 @@ int main(){
 }
 
 void generateMatrix(unsigned short int **matrix, int matrixSize){
+    srand(time(0));
+
     for(int i = 0; i < matrixSize; i++){
         *(matrix + i) = (unsigned short int *)malloc(matrixSize * sizeof(unsigned short int));
         if(!*(matrix + i)){
