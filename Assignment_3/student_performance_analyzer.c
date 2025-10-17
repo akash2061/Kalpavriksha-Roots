@@ -11,6 +11,14 @@ typedef struct StudentData{
     float marks[MAX_SUBJECTS];
 } Data;
 
+enum Grade {
+    A = 85, 
+    B = 70, 
+    C = 50, 
+    D = 35, 
+    F = 0
+};
+
 void takeInput(Data *student, int);
 void displayStudent(Data *student, int);
 float totalMarks(Data student);
@@ -32,13 +40,16 @@ void takeInput(Data students[], int student_count){
     for(int i = 0; i < student_count; i++){
         char input_string[100];
         fgets(input_string, sizeof(input_string) - 1, stdin);
+
         char *token = strtok(input_string, " ");
-        if(atoi(token) <= 0){
+        int roll_number = atoi(token);
+        if(roll_number <= 0){
             printf("Invalid Roll Number.\nRe-enter details for student %d\n", i+1);
             i--;
             continue;
         }
-        students[i].roll_no = atoi(token);
+        students[i].roll_no = roll_number;
+
         token = strtok(NULL, " ");
         if(token == NULL || strlen(token) == 0 || isalpha(token[0]) == 0){
             printf("Invalid Name.\nRe-enter details for student %d\n", i+1);
@@ -46,14 +57,16 @@ void takeInput(Data students[], int student_count){
             continue;
         }
         strcpy(students[i].name, token);
+
         int subject_count = 0;
         while((token = strtok(NULL, " ")) != NULL && subject_count != MAX_SUBJECTS){
-            if(atof(token) < 0 || atof(token) > 100){
+            float marks = atof(token);
+            if(marks < 0 || marks > 100){
                 printf("Invalid Marks.\nRe-enter details for student %d\n", i+1);
                 i--;
                 break;
             }
-            students[i].marks[subject_count] = atof(token);
+            students[i].marks[subject_count] = marks;
             subject_count++;
         }
     }
@@ -84,16 +97,16 @@ float avgMarks(Data student){
 
 void grades(Data student){
     float avg_marks = avgMarks(student);
-    if(avg_marks >= 85){
+    if(avg_marks >= A){
         printf("Grade: A\n");
         printf("Performance: *****\n");
-    }else if(avg_marks >= 70){
+    }else if(avg_marks >= B){
         printf("Grade: B\n");
         printf("Performance: ****\n");
-    }else if(avg_marks >= 50){
+    }else if(avg_marks >= C){
         printf("Grade: C\n");
         printf("Performance: ***\n");
-    }else if(avg_marks >= 35){
+    }else if(avg_marks >= D){
         printf("Grade: D\n");
         printf("Performance: **\n");
     }else{
