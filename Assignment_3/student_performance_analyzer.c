@@ -15,8 +15,7 @@ enum Grade {
     A = 85, 
     B = 70, 
     C = 50, 
-    D = 35, 
-    F = 0
+    D = 35
 };
 
 void takeInput(Data *student, int);
