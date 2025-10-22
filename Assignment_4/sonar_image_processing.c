@@ -12,6 +12,7 @@ void clockwiseRotate(unsigned short int**, int);
 void smoothingFilter(unsigned short int**, int);
 void leftShift(unsigned short int**, int);
 void clearUpperByte(unsigned short int**, int);
+void freeMatrix(unsigned short int**, int);
 
 int main(){
     int matrixSize;
@@ -41,10 +42,7 @@ int main(){
     printf("\nFinal Matrix:\n");
     displayMatrix(matrix, matrixSize);
 
-    for (int i = 0; i < matrixSize; i++) {
-        free(matrix[i]);
-    }
-    free(matrix); 
+    freeMatrix(matrix, matrixSize);
     return 0;
 }
 
@@ -55,6 +53,7 @@ void generateMatrix(unsigned short int **matrix, int matrixSize){
         *(matrix + i) = (unsigned short int *)malloc(matrixSize * sizeof(unsigned short int));
         if(!*(matrix + i)){
             printf("Memory allocation failed! for %d index.\n", i);
+            freeMatrix(matrix, i);
             exit(1);
         }
     }
@@ -107,6 +106,9 @@ void smoothingFilter(unsigned short int **matrix, int matrixSize){
                     int nighbor_cols = j + col_offset;
 
                     if(nighbor_rows >= 0 && nighbor_rows < matrixSize && nighbor_cols >= 0 && nighbor_cols < matrixSize){
+                        // !Extract upper 8 bits without modifying original value of matrix. (right shift)
+                        // !Bit-Mapping: [Original Value : 8 bits] [Filtered Value : 8 bits] (16 bits total)
+                        // !EXAMPLE: 1111 1011 0000 0100 (64260) -> 0000 0000 1111 1011 (251) [unsigned short int]
                         int upper_bits = *(*(matrix + nighbor_rows) + nighbor_cols) >> 8;
                         sum += upper_bits;
                         divisor++;
@@ -119,10 +121,17 @@ void smoothingFilter(unsigned short int **matrix, int matrixSize){
     }
 }
 
-void swap(unsigned short int *a, unsigned short int *b){
-    unsigned short int temp = *a;
-    *a = *b;
-    *b = temp;
+void swap(unsigned short int *intensity_a, unsigned short int *intensity_b){
+    unsigned short int temporary_intensity = *intensity_a;
+    *intensity_a = *intensity_b;
+    *intensity_b = temporary_intensity;
+}
+
+void freeMatrix(unsigned short int **matrix, int matrixSize){
+    for(int i = 0; i < matrixSize; i++){
+        free(*(matrix + i));
+    }
+    free(matrix);
 }
 
 void clearUpperByte(unsigned short int **matrix, int matrixSize){
