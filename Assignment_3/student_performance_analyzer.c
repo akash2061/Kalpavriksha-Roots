@@ -4,6 +4,8 @@
 #include <ctype.h>
 
 #define MAX_SUBJECTS 3
+#define MIN_STUDENTS 1
+#define MAX_STUDENTS 100
 
 typedef struct StudentData{
     int roll_no;
@@ -27,7 +29,10 @@ void displayRollNo(Data *student, int);
 
 int main(){
     int student_count;
-    scanf("%d", &student_count);
+    do{
+        printf("Enter the number of students (1-100): ");
+        scanf("%d", &student_count);
+    }while(student_count < MIN_STUDENTS || student_count > MAX_STUDENTS);
     getchar();
     Data student[student_count];
     takeInput(student, student_count);
