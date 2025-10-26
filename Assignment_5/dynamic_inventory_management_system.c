@@ -283,6 +283,7 @@ int validID(ProductDetails *products, int count){
 char* validName(){
     char *name = (char *)calloc(MAX_LENGTH, sizeof(char));
     fgets(name, MAX_LENGTH, stdin);
+    while(getchar() != '\n');
     size_t len = strlen(name);
     if (len > 0 && name[len - 1] == '\n'){
         name[len - 1] = '\0';
