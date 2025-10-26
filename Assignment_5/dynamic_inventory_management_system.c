@@ -27,10 +27,11 @@ void deleteProduct(ProductDetails **, int *);
 void searchByID(ProductDetails *, int);
 void searchByName(ProductDetails *, int);
 void searchByPrice(ProductDetails *, int);
+int uniqueID(ProductDetails *, int, int *);
 
 float validPrice();
 char* validName();
-int validID();
+int validID(ProductDetails *, int);
 int validQuantity();
 
 int main(){
@@ -109,7 +110,7 @@ void menu(){
 
 void addItem(ProductDetails **products, int count){
     int new_count = count;
-    (*products + new_count)->id = validID();
+    (*products + new_count)->id = validID(*products, new_count);
 
     printf("Product Name: ");
     char *name = validName();
@@ -253,7 +254,17 @@ void searchByPrice(ProductDetails *products, int count){
     }
 }
 
-int validID(){
+int uniqueID(ProductDetails *products, int count, int *id) {
+    for(int i = 0; i < count; i++){
+        if(*id == (products + i)->id){
+            printf("\nProduct ID already exists! Enter a unique ID.\n");
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int validID(ProductDetails *products, int count){
     int id;
     do {
         printf("\nProduct ID (1–%d): ", MAX_PRODUCT_ID);
@@ -261,6 +272,9 @@ int validID(){
         getchar();
         if (id < 1 || id > MAX_PRODUCT_ID) {
             printf("\nInvalid ID! Please enter between 1 and %d: ", MAX_PRODUCT_ID);
+        }
+        else if (!uniqueID(products, count, &id)) {
+            id = -1; 
         }
     } while ((id < 1 || id > MAX_PRODUCT_ID));
     return id;
