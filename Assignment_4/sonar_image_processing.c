@@ -4,6 +4,7 @@
 
 #define MIN_MATRIX_SIZE 2
 #define MAX_MATRIX_SIZE 10
+#define MAX_INTENSITY 256
 
 void swap(unsigned short int*, unsigned short int*);
 void generateMatrix(unsigned short int**, int);
@@ -51,7 +52,7 @@ void generateMatrix(unsigned short int **matrix, int matrixSize){
 
     for(int i = 0; i < matrixSize; i++){
         *(matrix + i) = (unsigned short int *)malloc(matrixSize * sizeof(unsigned short int));
-        if(!*(matrix + i)){
+        if(*(matrix + i) == NULL){
             printf("Memory allocation failed! for %d index.\n", i);
             freeMatrix(matrix, i);
             exit(1);
@@ -60,7 +61,7 @@ void generateMatrix(unsigned short int **matrix, int matrixSize){
 
     for(int i = 0; i < matrixSize; i++){
         for(int j = 0; j < matrixSize; j++){
-            *(*(matrix + i) + j) = rand() % 256;
+            *(*(matrix + i) + j) = rand() % MAX_INTENSITY;
         }
     }
 }
@@ -135,7 +136,6 @@ void freeMatrix(unsigned short int **matrix, int matrixSize){
 }
 
 void clearUpperByte(unsigned short int **matrix, int matrixSize){
-    // !EXAMPLE: 1111 1111 1111 1111 (65535) -> 0000 0000 1111 1111 (255) [unsigned short int]
     for(int i = 0; i < matrixSize; i++){
         for(int j = 0; j < matrixSize; j++){
             *(*(matrix + i) + j) <<= 8;
@@ -145,7 +145,6 @@ void clearUpperByte(unsigned short int **matrix, int matrixSize){
 }
 
 void leftShift(unsigned short int **matrix, int matrixSize){
-    // !EXAMPLE: 0000 0000 1111 1111 (255) -> 1111 1111 0000 0000 (65280) [unsigned short int]
     for(int i = 0; i < matrixSize; i++){
         for(int j = 0; j < matrixSize; j++){
             *(*(matrix + i) + j) <<= 8;
