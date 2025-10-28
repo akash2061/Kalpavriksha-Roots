@@ -37,14 +37,13 @@ int validQuantity();
 int main(){
     printf("Enter initial number of products: ");
     int product_count;
-    scanf("%d", &product_count);
-    getchar(); 
-
-    while(product_count < MIN_VALUE || product_count > MAX_PRODUCT){
-        printf("Re-Enter number of products (1-100): ");
+    do{
         scanf("%d", &product_count);
-        getchar();
-    }
+        getchar(); 
+        if(product_count < MIN_VALUE || product_count > MAX_PRODUCT){
+            printf("\nInvalid number of products! Please enter between %d and %d: ", MIN_VALUE, MAX_PRODUCT);
+        }
+    } while(product_count < MIN_VALUE || product_count > MAX_PRODUCT);
 
     ProductDetails *products = calloc(product_count, sizeof(ProductDetails));
     for (int i = 0; i < product_count; i++) {
