@@ -4,7 +4,7 @@
 
 #define MIN_MATRIX_SIZE 2
 #define MAX_MATRIX_SIZE 10
-#define MAX_INTENSITY 256
+#define MAX_INTENSITY 255
 
 void swap(unsigned short int*, unsigned short int*);
 void generateMatrix(unsigned short int**, int);
@@ -61,7 +61,7 @@ void generateMatrix(unsigned short int **matrix, int matrixSize){
 
     for(int i = 0; i < matrixSize; i++){
         for(int j = 0; j < matrixSize; j++){
-            *(*(matrix + i) + j) = rand() % MAX_INTENSITY;
+            *(*(matrix + i) + j) = rand() % (MAX_INTENSITY + 1);
         }
     }
 }
