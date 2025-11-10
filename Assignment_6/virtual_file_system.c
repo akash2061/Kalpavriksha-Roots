@@ -656,9 +656,6 @@ void cmdDelete(const char *filename, FileNode *current_directory)
 
 void initializeFreeList()
 {
-    freeListHead = NULL;
-    freeListTail = NULL;
-
     for (int i = 0; i < MAX_BLOCK_COUNT; i++)
     {
         FreeBlock *block = (FreeBlock *)malloc(sizeof(FreeBlock));
