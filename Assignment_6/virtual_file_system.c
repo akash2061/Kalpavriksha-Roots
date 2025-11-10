@@ -69,7 +69,7 @@ int main()
     }
     initializeFreeList();
     FileNode *current_directory = root;
-    printf("Welcome to the Virtual File System!\n");
+    printf("Compact VFS - ready. Type 'exit' to quit.\n");
     while (TRUE)
     {
         printf("%s> ", current_directory->name);
