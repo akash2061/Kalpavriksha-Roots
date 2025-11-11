@@ -108,19 +108,18 @@ void menu(){
 }
 
 void addItem(ProductDetails **products, int count){
-    int new_count = count;
-    (*products + new_count)->id = validID(*products, new_count);
+    (*products + count)->id = validID(*products, count);
 
     printf("Product Name: ");
     char *name = validName();
-    strcpy((*products + new_count)->name, name);
+    strcpy((*products + count)->name, name);
     free(name);
 
     printf("Product Price: ");
-    (*products + new_count)->price = validPrice();
+    (*products + count)->price = validPrice();
 
     printf("Product Quantity: ");
-    (*products + new_count)->quantity = validQuantity();
+    (*products + count)->quantity = validQuantity();
 }
 
 void displayProductData(ProductDetails *products, int index){
@@ -282,7 +281,6 @@ int validID(ProductDetails *products, int count){
 char* validName(){
     char *name = (char *)calloc(MAX_LENGTH, sizeof(char));
     fgets(name, MAX_LENGTH, stdin);
-    while(getchar() != '\n');
     size_t len = strlen(name);
     if (len > 0 && name[len - 1] == '\n'){
         name[len - 1] = '\0';
