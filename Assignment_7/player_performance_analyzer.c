@@ -59,20 +59,20 @@ Team team_data[MAX_TEAMS];
 RoleBasedLists role_lists;
 
 void initializeData();
-float calculatePerformanceIndex(Role role, float battingAvg, float strikeRate, int wickets, float economyRate);
+float calculatePerformanceIndex(Role, float, float, int, float);
 void addPlayerToTeam();
 void displayTeamPlayers();
 void displayTeamsByStrikeRate();
 void displayTopKPlayers();
 void displayPlayersByRole();
-int binarySearchTeam(int team_id);
-void insertPlayerSorted(RolePlayerNode **head, PlayerNode *player);
-void insertPlayerInTeamRoleList(PlayerNode **head, PlayerNode *player);
-void calculateTeamStats(Team *team);
+int binarySearchTeam(int);
+void insertPlayerSorted(RolePlayerNode **, PlayerNode *);
+void insertPlayerInTeamRoleList(PlayerNode **, PlayerNode *);
+void calculateTeamStats(Team *);
 void displayMenu();
 
-Role getRoleFromString(const char *roleStr);
-const char *getRoleString(Role role);
+Role getRoleFromString(const char *);
+const char *getRoleString(Role );
 void cleanInputBuffer();
 void freeMemory();
 
