@@ -10,5 +10,6 @@ This repository contains my assignments from the **Kalpavriksha training program
 4. **[Sonar Image Processing](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_4)**
 5. **[Dynamic Inventory Management System](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_5)**
 6. **[Virtual File System (VFS)](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_6)**
+7. **[ICC ODI Player Performance Analyzer](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_7)**
 
 -->
