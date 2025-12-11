@@ -14,40 +14,27 @@ typedef enum
 
 typedef struct ProcessDetails
 {
-    int processID;
-    char *processName;
-    int burstTime;
-    int ioStartTime;
-    int ioDuration;
-    State processState;
-    int arrivalTime;
-    int completionTime;
-    int waitingTime;
-    int turnAroundTime;
-    int runningTime;
-    int ioRemainingTime;
-    int killTime;
+    int process_id;
+    char *process_name;
+    int burst_time;
+    int io_start_time;
+    int io_duration;
+    State process_state;
+    int arrival_time;
+    int completion_time;
+    int waiting_time;
+    int turn_around_time;
+    int running_time;
+    int io_remaining_time;
+    int kill_time;
     struct ProcessDetails *next;
-    struct ProcessDetails *previous;
 } ProcessDetails;
 
 typedef struct
 {
     ProcessDetails *front;
     ProcessDetails *rear;
-} ReadyQueue;
-
-typedef struct
-{
-    ProcessDetails *front;
-    ProcessDetails *rear;
-} WaitingQueue;
-
-typedef struct
-{
-    ProcessDetails *front;
-    ProcessDetails *rear;
-} TerminatedQueue;
+} Queue;
 
 typedef struct HashNode
 {
@@ -64,9 +51,9 @@ typedef struct KilledProcess
 } KilledProcess;
 
 extern HashNode *PCBHash[HASH_MAP_SIZE];
-extern ReadyQueue readyQueue;
-extern WaitingQueue waitingQueue;
-extern TerminatedQueue terminatedQueue;
+extern Queue readyQueue;
+extern Queue waitingQueue;
+extern Queue terminatedQueue;
 extern KilledProcess *killedProcessListHead;
 extern int systemClock;
 extern int processIsRunning;
