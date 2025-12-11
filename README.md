@@ -11,5 +11,6 @@ This repository contains my assignments from the **Kalpavriksha training program
 5. **[Dynamic Inventory Management System](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_5)**
 6. **[Virtual File System (VFS)](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_6)**
 7. **[ICC ODI Player Performance Analyzer](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_7)**
+8. **[LRU Cache Implementation (HashMap & Queue)](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_8)**
 
 -->
