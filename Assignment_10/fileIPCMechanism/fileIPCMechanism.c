@@ -37,7 +37,7 @@ int getValidInteger()
             if (getchar() != '\n')
             {
                 printf("Invalid input. Please enter again: ");
-                while (getchar() != '\n');\
+                while (getchar() != '\n');
             }
             else
             {
