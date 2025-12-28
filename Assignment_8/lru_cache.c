@@ -30,7 +30,8 @@ int main()
         else if (strcmp(command, "get") == 0)
         {
             scanf("%d", &key);
-            printf("%s\n", get(key));
+            char *result = get(key);
+            printf("%s\n", result != NULL ? result : "NULL");
         }
         else if (strcmp(command, "exit") == 0)
         {

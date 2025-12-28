@@ -2,7 +2,7 @@
 
 int hashFunction(int key)
 {
-    return key % cache->capacity;
+    return ((key % cache->capacity) + cache->capacity) % cache->capacity;
 }
 
 QueueNode *createQueueNode(int key, const char *data)
@@ -22,6 +22,12 @@ QueueNode *createQueueNode(int key, const char *data)
 
 void createCache(int capacity)
 {
+    if (capacity < 1 || capacity > MAX_CAPACITY)
+    {
+        printf("Error: Cache capacity must be between 1 and %d\n", MAX_CAPACITY);
+        return;
+    }
+
     cache = (LRUCache *)malloc(sizeof(LRUCache));
     if (cache == NULL)
     {
@@ -200,7 +206,7 @@ char *get(int key)
 
     if (index == -1)
     {
-        return "NULL";
+        return NULL;
     }
 
     QueueNode *node = cache->hashMap[index];
