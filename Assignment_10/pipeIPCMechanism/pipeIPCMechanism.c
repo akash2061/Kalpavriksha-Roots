@@ -30,14 +30,16 @@ int getValidInteger()
         if (scanf("%d", &number) != 1)
         {
             printf("Invalid input. Please enter again: ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
         else
         {
             if (getchar() != '\n')
             {
                 printf("Invalid input. Please enter again: ");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
             }
             else
             {
@@ -92,15 +94,39 @@ void sortArray(int *arr, int size)
 
 void sendDataThroughPipe(int writeFd, int *arr, int size)
 {
-    write(writeFd, &size, sizeof(int));
-    write(writeFd, arr, size * sizeof(int));
+    if (write(writeFd, &size, sizeof(int)) != sizeof(int))
+    {
+        printf("Error: Failed to write size to pipe\n");
+        return;
+    }
+    if (write(writeFd, arr, size * sizeof(int)) != size * sizeof(int))
+    {
+        printf("Error: Failed to write array data to pipe\n");
+        return;
+    }
 }
 
 int receiveDataThroughPipe(int readFd, int *arr)
 {
     int size;
-    read(readFd, &size, sizeof(int));
-    read(readFd, arr, size * sizeof(int));
+    if (read(readFd, &size, sizeof(int)) != sizeof(int))
+    {
+        printf("Error: Failed to read size from pipe\n");
+        return -1;
+    }
+
+    if (size <= 0 || size > MAX_SIZE)
+    {
+        printf("Error: Invalid size %d received from pipe. Must be between 1 and %d\n", size, MAX_SIZE);
+        return -1;
+    }
+
+    if (read(readFd, arr, size * sizeof(int)) != size * sizeof(int))
+    {
+        printf("Error: Failed to read array data from pipe\n");
+        return -1;
+    }
+
     return size;
 }
 

@@ -39,14 +39,16 @@ int getValidInteger()
         if (scanf("%d", &number) != 1)
         {
             printf("Invalid input. Please enter again: ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
         else
         {
             if (getchar() != '\n')
             {
                 printf("Invalid input. Please enter again: ");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
             }
             else
             {
@@ -137,6 +139,12 @@ void childProcess(int msgid)
 
     Message msg;
     receiveMessage(msgid, &msg, MSG_TYPE_TO_CHILD);
+
+    if (msg.size <= 0 || msg.size > MAX_SIZE)
+    {
+        printf("Error: Invalid message size %d received. Must be between 1 and %d\n", msg.size, MAX_SIZE);
+        return;
+    }
 
     printf("Child process sorting the array...\n");
     sortArray(msg.data, msg.size);

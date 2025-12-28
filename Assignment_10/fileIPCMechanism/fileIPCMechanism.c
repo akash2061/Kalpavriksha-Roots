@@ -30,14 +30,16 @@ int getValidInteger()
         if (scanf("%d", &number) != 1)
         {
             printf("Invalid input. Please enter again: ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
         else
         {
             if (getchar() != '\n')
             {
                 printf("Invalid input. Please enter again: ");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
             }
             else
             {
@@ -99,10 +101,28 @@ int readArrayFromFile(int *arr)
         return 0;
     }
     int size;
-    fscanf(file, "%d", &size);
+    if (fscanf(file, "%d", &size) != 1)
+    {
+        printf("Error reading size from file.\n");
+        fclose(file);
+        return 0;
+    }
+
+    if (size <= 0 || size > MAX_SIZE)
+    {
+        printf("Error: Invalid array size %d read from file. Must be between 1 and %d\n", size, MAX_SIZE);
+        fclose(file);
+        return 0;
+    }
+
     for (int i = 0; i < size; i++)
     {
-        fscanf(file, "%d", &arr[i]);
+        if (fscanf(file, "%d", &arr[i]) != 1)
+        {
+            printf("Error reading array element %d from file.\n", i);
+            fclose(file);
+            return 0;
+        }
     }
     fclose(file);
     return size;

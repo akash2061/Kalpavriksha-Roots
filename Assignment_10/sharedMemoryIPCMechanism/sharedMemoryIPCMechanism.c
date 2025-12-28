@@ -40,14 +40,16 @@ int getValidInteger()
         if (scanf("%d", &number) != 1)
         {
             printf("Invalid input. Please enter again: ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
         else
         {
             if (getchar() != '\n')
             {
                 printf("Invalid input. Please enter again: ");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
             }
             else
             {
@@ -115,6 +117,7 @@ SharedData *createAndAttachSharedMemory(int *shmid)
         printf("Shared memory attachment failed.\n");
         return NULL;
     }
+    sharedData->ready = 0;
     return sharedData;
 }
 
