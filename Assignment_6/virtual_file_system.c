@@ -540,12 +540,19 @@ void cmdWrite(const char *filename, const char *data, FileNode *current_director
     for (int i = 0; i < file->block_count; i++)
     {
         freeAllocatedBlocks(file->block_pointers[i]);
+        file->block_pointers[i] = 0;
     }
     file->block_count = 0;
     file->size = 0;
 
     int dataLen = strlen(data);
     int blocksNeeded = (dataLen + MAX_BLOCK_SIZE - 1) / MAX_BLOCK_SIZE;
+
+    if (blocksNeeded > MAX_BLOCKS_PER_FILE)
+    {
+        printf("Error: File size exceeds maximum blocks per file.\n");
+        return;
+    }
 
     if (blocksNeeded > MAX_BLOCK_COUNT - used_blocks)
     {
