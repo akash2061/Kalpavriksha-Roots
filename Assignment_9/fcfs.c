@@ -11,7 +11,7 @@ KilledProcess *killedProcessListHead = NULL;
 
 int getHashKey(int key)
 {
-    return key % HASH_MAP_SIZE;
+    return ((key % HASH_MAP_SIZE) + HASH_MAP_SIZE) % HASH_MAP_SIZE;
 }
 
 void insertInPCB(int pid, char *pname, int burstTime, int ioTime, int ioDuration)
@@ -20,7 +20,22 @@ void insertInPCB(int pid, char *pname, int burstTime, int ioTime, int ioDuration
     if (!newProcess)
     {
         printf("\nMemory allocation failed");
+        return;
     }
+
+    int hashIndex = getHashKey(pid);
+    HashNode *currentHashNode = PCBHash[hashIndex];
+    while (currentHashNode != NULL)
+    {
+        if (currentHashNode->processData->process_id == pid)
+        {
+            printf("\nError: Process with PID %d already exists", pid);
+            free(newProcess);
+            return;
+        }
+        currentHashNode = currentHashNode->next;
+    }
+
     newProcess->process_id = pid;
     newProcess->process_name = calloc(strlen(pname) + 1, sizeof(char));
     strcpy(newProcess->process_name, pname);
@@ -52,11 +67,11 @@ void insertInPCB(int pid, char *pname, int burstTime, int ioTime, int ioDuration
     if (!newHashNode)
     {
         printf("\nMemory allocation failed");
+        return;
     }
     newHashNode->next = NULL;
     newHashNode->processData = newProcess;
 
-    int hashIndex = getHashKey(pid);
     newHashNode->next = PCBHash[hashIndex];
     PCBHash[hashIndex] = newHashNode;
 }

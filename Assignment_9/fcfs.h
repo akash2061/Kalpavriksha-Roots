@@ -1,7 +1,7 @@
 #ifndef FCFS_H
 #define FCFS_H
 
-#define HASH_MAP_SIZE 100
+#define HASH_MAP_SIZE 101
 #define INPUT_SIZE 100
 
 typedef enum
