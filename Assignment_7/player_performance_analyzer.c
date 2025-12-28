@@ -10,6 +10,7 @@
 
 typedef enum
 {
+    INVALID_ROLE = 0,
     BATSMAN = 1,
     BOWLER = 2,
     ALL_ROUNDER = 3
@@ -72,7 +73,7 @@ void calculateTeamStats(Team *);
 void displayMenu();
 
 Role getRoleFromString(const char *);
-const char *getRoleString(Role );
+const char *getRoleString(Role);
 void cleanInputBuffer();
 void freeMemory();
 
@@ -140,7 +141,8 @@ Role getRoleFromString(const char *roleStr)
     {
         return ALL_ROUNDER;
     }
-    return BATSMAN;
+    printf("Error: Invalid role '%s'. Valid roles are: Batsman, Bowler, All-rounder\n", roleStr);
+    return INVALID_ROLE;
 }
 
 const char *getRoleString(Role role)
@@ -153,6 +155,8 @@ const char *getRoleString(Role role)
         return "Bowler";
     case ALL_ROUNDER:
         return "All-rounder";
+    case INVALID_ROLE:
+        return "Invalid";
     default:
         return "Unknown";
     }
@@ -168,6 +172,9 @@ float calculatePerformanceIndex(Role role, float battingAvg, float strikeRate, i
         return (wickets * 2.0) + (100.0 - economyRate);
     case ALL_ROUNDER:
         return ((battingAvg * strikeRate) / 100.0) + (wickets * 2.0);
+    case INVALID_ROLE:
+        printf("Error: Cannot calculate performance index for invalid role\n");
+        return 0.0;
     default:
         return 0.0;
     }
@@ -378,6 +385,18 @@ void addPlayerToTeam()
         printf("\nError. Enter number");
         free(new_player);
         return;
+    }
+
+    PlayerNode *temp = team_data[teamIdx].players;
+    while (temp != NULL)
+    {
+        if (temp->player_id == new_player->player_id)
+        {
+            printf("Error: Player with ID %d already exists in this team\n", new_player->player_id);
+            free(new_player);
+            return;
+        }
+        temp = temp->next;
     }
 
     cleanInputBuffer();
@@ -721,5 +740,6 @@ void freeMemory()
 void cleanInputBuffer()
 {
     int buffer;
-    while ((buffer = getchar()) != '\n');
+    while ((buffer = getchar()) != '\n')
+        ;
 }
