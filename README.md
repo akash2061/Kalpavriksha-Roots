@@ -13,5 +13,6 @@ This repository contains my assignments from the **Kalpavriksha training program
 7. **[ICC ODI Player Performance Analyzer](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_7)**
 8. **[LRU Cache Implementation (HashMap & Queue)](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_8)**
 9. **[FCFS - Based OS Process Scheduling Simulator](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_9)**
+10. **[Interprocess Communication & Socket Programming](https://github.com/akash2061/Kalpavriksha-Roots/tree/main/Assignment_10)**
 
 -->
